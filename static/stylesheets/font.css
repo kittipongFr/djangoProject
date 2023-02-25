@@ -1,0 +1,48 @@
+@font-face {
+    font-family: 'MN_ADVENTURE';
+    src: url("bt523/font/MN ADVENTURE.ttf");
+}
+
+@font-face {
+    font-family: 'sd_prototype';
+    src: url("bt523/font/sd_prototype finish.ttf");
+}
+
+h5{
+    font-family: "MN_ADVENTURE",sans-serif;
+    font-size: 1.30em;
+}
+h4{
+    font-family: "sd_prototype",sans-serif;
+    font-size: 2em;
+}
+h1{
+    font-family: "sd_prototype",sans-serif;
+    font-size: 4.5em;
+}
+h3{
+    font-family: "MN_ADVENTURE",sans-serif;
+    font-size: 2.5em;
+}
+h33{
+    font-family: "MN_ADVENTURE",sans-serif;
+    font-size: 2.5em;
+}
+p {
+    font-family: "sd_prototype", sans-serif;
+    font-size: 1.5em;
+}
+a{
+    font-family: "MN_ADVENTURE",sans-serif;
+    font-size: 1.5em;
+}
+
+td{
+    font-family: "MN_ADVENTURE",sans-serif;
+    font-size: 1.5em;
+}
+th{
+    font-family: "MN_ADVENTURE",sans-serif;
+    font-size: 1.7em;
+}
+

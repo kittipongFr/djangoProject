@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- End Navbar -->
+{% block content %}
+    <div class="container py-4 ">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4 boxs">
+
+                    <div class="card-header pb-0">
+                        <div class="row">
+
+
+
+
+                        <div class="col-2 "><h6>โปรไฟล์</h6>
+
+                        </div>
+                        <div class="col-8 ">
+
+                        </div>
+                        </div>
+
+                    </div>
+
+                    <div class="card-body pb-2">
+
+                                    {% if success %}
+                                <div class="col-lg-4 ">
+                                    <div class="alert alert-success  role="alert">
+                                        <strong>แจ้งเตือน !</strong> {{ success }}
+                                    </div>
+                                </div>
+                            {% endif %}
+                                     {% if error0 %}
+                                <div class="col-lg-4 ">
+                                    <div class="alert alert-danger  role="alert">
+                                        <strong>ข้อผิดพลาด !</strong> {{ error0 }}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if error %}
+                                <div class="col-lg-4 ">
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>ข้อผิดพลาด !</strong> {{ error }}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                        <form role="form" method="POST" action="{% url 'memChangePassword' %}"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+
+                                <div class="form-group ">
+                                        <label for="province" class="form-control-label ">oldPassword</label>
+                                        <input class="form-control" required value="" name="oldPassword">
+                                    </div>
+                                <div class="form-group ">
+                                        <label for="province" class="form-control-label ">newPassword</label>
+                                        <input class="form-control" required value="" name="newPassword">
+                                    </div>
+                                <div class="form-group ">
+                                        <label for="province" class="form-control-label ">confirmPassword</label>
+                                        <input class="form-control" required value="" name="confirmPassword">
+                                    </div>
+
+
+
+                                </div>
+
+
+                            <div class="col-md-6">
+
+
+
+                            </div>
+
+                            </div>
+
+
+                        <div class="row">
+                                <div class="col-6">
+
+                                    <div class="form-group">
+                                        <button type="submit" href="#" class="btn btn-warning px-3 py-2"><i class="fa fa-save"></i> เปลี่ยนรหัส</button>
+                                        <a onclick="history.back()" class="btn btn-danger text-white px-3 py-2 ">กลับ <i class="fa fa-close"></i> </a>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                    </div>
+
+
+                    <div class="card-footer pb-0">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

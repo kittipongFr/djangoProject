@@ -1,0 +1,86 @@
+{% extends 'backend/baseback.html' %}
+{% load static %}
+    <!-- End Navbar -->
+{% block content %}
+    <div class="container py-4 ">
+      <div class="row">
+        <div class="col-12">
+            <div class="card mb-4 boxs">
+                <div class="card-header pb-0">
+                    <h6>เพิ่มธนาคาร</h6>
+                </div>
+                <div class="card-body pb-2">
+                    <form role="form" method="POST" action="" enctype="multipart/form-data">
+                       {% csrf_token %}
+
+       {% if eror %}
+                <div class="col-lg-4">
+                      <div class="alert alert-danger text-white" role="alert">
+      <strong>ข้อผิดพลาด !</strong>  ชื่อประเภทรถนี้เคยลงทะเบียนในระบบแล้ว!
+  </div>
+                </div>
+                {% endif %}
+
+
+                    <div class="row">
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group ">
+                                    <label for="name" class="form-control-label">เลขที่บัญชี</label>
+                                    <input class="form-control " readonly maxlength="13" required type="text" value="{{ bank.bank_num }}" name="b_num" id="id">
+                                </div>
+                            </div>
+
+                             <div class="col">
+                                <div class="form-group ">
+                                    <label for="name" class="form-control-label">สาขา</label>
+                                    <input class="form-control " maxlength="20" required type="text" value="{{ bank.branch }}" name="branch" id="type">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                         <div class="col">
+                                <div class="form-group ">
+                                    <label for="name" class="form-control-label">ชื่อเจ้าของบัญชี</label>
+                                    <input class="form-control " maxlength="30" required type="text" value="{{ bank.name }}" name="name" id="name">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label for="name" class="form-control-label">ธนาคาร</label>
+
+                                    <select class="form-control" name="bank" id="bank">
+                                    <option value="{{ bank.bank_id.id }}">{{ bank.bank_id.bank_name }}</option>
+                                        {% for bk in banks %}
+                                        <option value="{{ bk.id }}">{{ bk.bank_name }}</option>
+                                        {% endfor %}
+                                    </select>
+        <input class="form-control " maxlength="20" required type="hidden" value="{{ request.session.userId }}" name="oid" id="oid">
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <button type="submit" href="#" class="btn btn-success px-3 py-2"><i
+                                            class="fa fa-save"></i> บันทึก</button>
+                                     <a onclick="history.back()" class="btn btn-danger text-white px-3 py-2 ">กลับ <i class="fa fa-close"></i> </a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                </form>
+
+            </div>
+            <div class="card-footer pb-0">
+
+            </div>
+        </div>
+    </div>
+    </div>
+        </div>
+     {% endblock %}

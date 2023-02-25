@@ -1,0 +1,116 @@
+{% extends 'backend/baseback.html' %}
+{% load static %}
+    <!-- End Navbar -->
+{% block content %}
+    <div class="container-fluid py-4 ">
+      <div class="row">
+        <div class="col-12">
+            <div class="card mb-4 boxs">
+                <div class="card-header pb-0">
+                    <h6>ลบรถยนต์</h6>
+                </div>
+                <div class="card-body pb-2">
+                    <form role="form" method="POST" action="" enctype="multipart/form-data">
+                       {% csrf_token %}
+
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group ">
+                                    <label for="name" class="form-control-label">ทะเบียนรถ</label>
+                                    <input class="form-control " readonly type="text" value="{{ car.car_id }}" name="id" id="id">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group ">
+                                    <label for="name" class="form-control-label">ยี่ห้อรถ</label>
+                                    <input class="form-control " readonly type="text" value="{{ car.brand }}" name="brand" id="brand">
+                                </div>
+                            </div>
+                             <div class="col">
+                                <div class="form-group ">
+                                    <label for="name" class="form-control-label">รุ่น</label>
+                                    <input class="form-control " readonly type="text" value="{{ car.car_model }}" name="model" id="model">
+                                </div>
+                            </div>
+
+                        </div>
+
+<div class="row">
+ <div class="col">
+    <div class="form-group ">
+        <label for="name" class="form-control-label ">ประเภท</label>
+        <select class="form-control " readonly name="type" id="type">
+
+            <option value="{{ car.type_id.type_id }}">{{ car.type_id.type_name }}</option>
+             {% for type in types %}
+            <option value="{{ type.type_id }}">{{ type.type_name }}</option>
+                {% endfor %}
+        </select>
+    </div>
+</div>
+
+                            <div class="col">
+                                <div class="form-group ">
+                                    <label for="price" class="form-control-label">ราคาเช่า/วัน</label>
+                                    <input class="form-control" readonly type="number" value="{{ car.price }}" name="price" id="price">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group ">
+                                    <label for="province"  class="form-control-label ">จังหวัด</label>
+                                    <select class="form-control"  readonly  name="province" id="province">
+                                    <option readonly value="{{ car.provinces.id }}">{{ car.provinces.name_th }}</option>
+                                        {% for pv in provinces %}
+                                            <option value="{{ pv.id }}">{{ pv.name_th }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+
+                                <label for="image_load" class="form-control-label">รูปภาพ (upload)</label>
+                                <input class="form-control" readonly type="file" value="" name="img" id="fileInput">
+{#                                <input class="form-control" type="hidden" value="{{ car.img.url }}" name="old_img" id="old_img">#}
+                            </div>
+                        </div>
+
+                        <script>
+              // Example file object
+              const defaultFile = new File(["Default file content"], {{ car.img.url }}, {
+                type: "text/plain",
+              });
+
+              // Get the file input element
+              const fileInput = document.getElementById("fileInput");
+
+              // Set the default file on the file input element
+              fileInput.files = [defaultFile];
+            </script>
+
+
+
+                    <input class="form-control " readonly type="hidden" value="o001" name="own" id="own">
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <button onclick="confirm('ต้องการลบใช่/ไม่')" type="submit" href="#" class="btn btn-danger px-3 py-2"><i
+                                            class="fa fa-trash"></i> ลบ </button>
+                                    <a onclick="history.back()" class="btn btn-warning text-white px-3 py-2 ">กลับ <i class="fa fa-close"></i> </a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                </form>
+
+            </div>
+            <div class="card-footer pb-0">
+
+            </div>
+        </div>
+    </div>
+    </div>
+        </div>
+     {% endblock %}

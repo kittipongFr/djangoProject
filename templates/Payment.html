@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+    <!-- End Navbar -->
+{% block content %}
+    <div class="container-fluid py-4 ">
+
+      <div class="row">
+
+        <div class="col-12">
+
+          <div class="card mb-4 boxs">
+                <h1 class="text-center">แจ้งชำระ</h1>
+            <div class="card-header pb-0">
+              <h6>รายละเอียดบิลการเช่า</h6>
+                <p>เลขที่การเช่า : {{ rent.rent_id }}  ชื่อผู้เช่า : {{ rent.mem_id.name }}</p>
+                 <p>เช่าวันที่ : {{ rent.return_date }}</p>
+{% if rent.status == '1' or '2' or '3'%}
+                      <span class="badge badge-xl bg-success text-start text-white"  style="font-size: 15pt">{{ rent.getStatus }} </span>
+                    {% endif %}
+            </div>
+
+          <div class="row">
+              <div class="col-2"></div>
+              <div class="col-8">
+
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+ <form class="form-control" enctype="multipart/form-data" method="post">
+                  {% csrf_token %}
+                <table class="table align-items-center mb-0">
+                 <h3 class="text-center">รายการเช่ารถ</h3>
+                  <thead>
+                    <tr>
+
+                      <th class="text-uppercase text-whitetext-xl font-weight-bolder opacity-7 ps-2">เลขทะเบียนรถ</th>
+                      <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">ยี่ห้อรถ</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">รุ่น</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">ประเภทรถ</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">ราคา/วัน</th>
+
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+
+                      <td>
+                         <p class=" mb-0 ">{{ rent.car.car_id }}</p>
+                      </td>
+
+
+
+                        <td>
+                        <p class=" mb-0 text-center">{{ rent.car.brand }}</p>
+                      </td>
+                         <td>
+                        <p class=" mb-0 text-center">{{ rent.car.car_model }}</p>
+                      </td>
+                        <td>
+                        <p class=" mb-0 text-center">{{ rent.car.type_id.type_name }}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class=" mb-0 text-center">{{ rent.car.price }}</p>
+                      </td>
+
+                    </tr>
+
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+                      </div>
+              <div class="col-2"></div>
+          </div>
+    <div class="row">
+          <div class="col-6">
+<br>
+            <br>
+                 <div class="row">
+                     <div class="col-2"></div>
+                            <div class="col-10">
+                            <div class="card-header">
+
+                                 <table class="table align-items-center mb-0">
+                 <h3 class="text-center">รายการเช่ารถ</h3>
+                  <thead>
+                    <tr>
+
+                      <th class="text-uppercase text-whitetext-xl font-weight-bolder opacity-7 ps-2">เลขบัญชี</th>
+                      <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">ธนาคาร</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">ชื่อ</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">สาขา</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">รูปภาพ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for b in bank %}
+                    <tr>
+                      <td>
+                         <p class=" mb-0 ">{{ b.bank_num }}</p>
+                      </td>
+                        <td>
+                        <p class=" mb-0 text-center">{{ b.bank_id.bank_name }}</p>
+                      </td>
+                         <td>
+                        <p class=" mb-0 text-center">{{ b.name }}</p>
+                      </td>
+                        <td>
+                        <p class=" mb-0 text-center">{{ b.branch }}</p>
+                      </td>
+                    <td>
+                        <img class="img" style="height: 75px ; width: auto" src="{{ b.bank_id.img.url }}" >
+                      </td>
+
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+
+
+
+                            </div>
+
+                                <div class="form-group ">
+                                    <label for="name" class="form-control-label" >เลขที่โอน</label>
+                                    <input class="form-control "  maxlength="200" required type="text" value="" name="pay_id" id="pay_id">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="name" class="form-control-label" >จำนวนชำระทั้งสิ้น</label>
+                                    <input class="form-control " required type="number" value="" name="total" id="total">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="name" class="form-control-label" >วันที่ชำระ</label>
+                                    <input class="form-control "  required type="date" value="" name="date" id="date">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="name" class="form-control-label" >บัญชีธนาคาร</label>
+                                    <select class="form-control " name="bank" id="bank">
+                                            {% for b in bank %}
+                                                <option value="{{ b.bank_num }}">{{ b.bank_id.bank_name }} {{ b.bank_num }}</option>
+
+                                            {% endfor %}
+                                        </select>
+                                </div>
+                                <div class="form-group ">
+                                    <label for="name" class="form-control-label" >รูปภาพ(สลิปการโอน)</label>
+                                    <input class="form-control "  required type="file" value="" name="slip" id="slip">
+                                </div>
+                                <div class="form-group ">
+                                   <input class="btn btn-success" onclick="return confirm('ท่านยืนยันใช่หรือไม่ ?')" type="submit" value="แจ้งชำระเงิน">
+
+                                    <a class="btn btn-warning text-white" href="{% url 'memRent' rent.rent_id %}" >ย้อนกลับ</a>
+                                </div>
+                            </div>
+</div>
+                  </form>
+          </div>
+
+          <div class="col-6">
+    <div class="card-header ">
+        <h6>รายละเอียด : </h6>
+        <p>รับรถ : <span class="text-warning">{{ rent.rent_date }}</span>   </p>
+        <p> คืนรถ : <span class="text-warning">{{ rent.return_date }}</span></p>
+        <p>จำนวน : <span class="text-warning">{{ rent.amount }}</span> วัน</p>
+        <h6>รวมทั้งสิ้น : <span class="text-danger"> {{ rent.getTotalrent }}</span> บาท</h6>
+            </div>
+
+
+
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+
+
+        </div>
+     {% endblock %}

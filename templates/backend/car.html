@@ -1,0 +1,113 @@
+{% extends 'backend/baseback.html' %}
+{% load static %}
+    <!-- End Navbar -->
+{% block content %}
+    <div class="container py-0 ">
+      <div class="row ">
+        <div class="col-12">
+          <div class="card mb-4 boxs">
+            <div class="card-header pb-0">
+              <h5>Car table
+                  <span class="badge badge-sm text-white bg-success" onclick="location.href='/CarRental/backend/car_add';" style="cursor:pointer;" >เพิ่มข้อมูล<i class="fa fa-plus-circle"></i></span>
+                  <span class="badge badge-sm text-white bg-danger" onclick="location.href='/CarRental/backend/'" style="cursor:pointer;" >กลับ<i class="fa fa-close"></i></span></h5>
+
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+
+
+
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase  text-xl font-weight-bolder ">ID/ทะเบียน</th>
+                      <th class="text-uppercase  text-xl font-weight-bolder  ps-2">ยี่ห้อ/รุ่น</th>
+                      <th class=" text-uppercase  text-xl font-weight-bolder ">ราคาเช่า/วัน</th>
+                      <th class=" text-uppercase  text-xl font-weight-bolder ">ประเภท</th>
+                        <th class="text-center text-uppercase  text-xl font-weight-bolder ">รูปภาพ</th>
+                      <th class="text-center text-uppercase  text-xl font-weight-bolder ">สถานะ</th>
+                      <th class="text-secondary "></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                  {% for car in car %}
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+
+                          <div class=" d-flex flex-column justify-content-center ">
+                            <h6 class="text-center mx-auto text-sm">{{ car.car_id }}</h6>
+
+                          </div>
+                        </div>
+                      </td>
+
+                        <td>
+                        <p class="text-xl font-weight-bold mb-0">{{ car.brand }}</p>
+                        <p class="text-xs text-secondary mb-0">{{ car.car_model }}</p>
+                      </td>
+                        <td>
+                        <p class="text-secondary text-xl font-weight-bold mb-0">{{ car.price | floatformat:2  }} บาท</p>
+                      </td>
+                    <td>
+                        <p class="text-secondary text-xl font-weight-bold mb-0">{{ car.type_id.type_name}}</p>
+                      </td>
+                    <td class="align-middle text-center text-sm">
+                        <img src="{{ car.img.url }}" class="avatar me-3" style="width:140px; height: 100px" alt="user1">
+                      </td>
+                        <td class="align-middle text-center text-sm">
+                            {% if car.status == 0 %}
+                        <span class="badge badge-sm bg-success text-white">{{ car.getStatus }}</span>
+                            {% elif car.status == 1 %}
+                       <span class="badge badge-sm bg-warning text-white">{{ car.getStatus }}</span>
+                            {% elif car.status == 1 %}
+                        <span class="badge badge-sm bg-secondary text-white">{{ car.getStatus }}</span>
+                            {% endif %}
+                      </td>
+
+
+
+                      <td class="align-middle text-center">
+                           <span class="badge badge-sm text-white bg-warning"  onclick="location.href='{% url 'backend_Car_edit' car.car_id %}';" style="cursor:pointer;">แก้ไข <i class="fa fa-wrench"></i></span>
+                          <span class="badge badge-sm text-white bg-danger" onclick="location.href='{% url 'backend_Car_delete' car.car_id %}';" style="cursor:pointer;">ลบ <i class="fa fa-trash"></i> </span>
+                      </td>
+                    </tr>
+                {% endfor %}
+                  </tbody>
+                </table>
+
+    <div class="text-center">
+        {% if car.has_other_pages %}
+            <div class="btn-group text-center" role="group" aria-label="Item pagination">
+                {% if car.has_previous %}
+                    <a href="{% url 'backend_Car' car.previous_page_number %}" class="btn btn-outline-success">&laquo;</a>
+                {% endif %}
+
+                {% for page_number in car.paginator.page_range %}
+                    {% if car.number == page_number %}
+                        <button class="btn btn-outline-success active">
+                            <span>{{ page_number }} <span class="sr-only">(current)</span></span>
+                        </button>
+                    {% else %}
+                        <a href="{% url 'backend_Car' page_number %}" class="btn btn-outline-success">
+                            {{ page_number }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if car.has_next %}
+                    <a href="{% url 'backend_Car' car.next_page_number %}" class="btn btn-outline-success">&raquo;</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+     {% endblock %}

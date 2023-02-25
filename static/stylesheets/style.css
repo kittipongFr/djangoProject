@@ -1,0 +1,305 @@
+nav {
+  background-color: #333; /* Set background color */
+}
+
+nav ul {
+  list-style-type: none; /* Remove bullets */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+nav li {
+  float: right; /* Float list items left */
+}
+
+nav li a {
+  display: block; /* Make links full-width */
+  color: white;
+  text-align: center;
+  padding: 14px 16px; /* Add some padding to links */
+  text-decoration: none;
+}
+
+nav li a:hover {
+  background-color: #bb2d3b; /* Add hover effect */
+}
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo img {
+  width: 40px;
+  height: 35px;
+}
+/* General styles */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Header styles */
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav li {
+  margin: 0 10px;
+
+}
+
+nav li .logout{
+  background-color: #bb2d3b;
+}
+nav li .login{
+  background-color: #bb2d3b;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #000000;
+  color: #f9f9f9;
+  text-decoration: none;
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+.btn2 {
+    background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn2:hover {
+  background-color: #800000;
+}
+
+.btn:hover {
+  background-color: #bb2d3b;
+}
+
+/* Product section styles */
+.products {
+  padding: 50px 0;
+  padding-bottom: 50px;
+}
+
+.products h2 {
+  text-align: center;
+}
+
+.products ul {
+  list-style: none;
+margin: 0;
+padding: 0;
+display: flex;
+justify-content: space-between;
+}
+
+.products li {
+width: 30%;
+margin: 0 10px;
+background-color: #f9f9f9;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+border-radius: 4px;
+padding: 20px;
+text-align: center;
+
+}
+
+.products li img {
+max-width: 100%;
+}
+
+.products li h3 {
+margin: 10px 0;
+}
+
+.products li p {
+margin: 10px 0;
+font-weight: bold;
+}
+
+
+img{
+  width: 350px;
+  height: 250px;
+}
+.My Image{
+  position: center;
+}
+
+.login-form {
+  max-width: 400px;
+  margin: 50px auto;
+  background-color: black;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.login-form h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: red;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 10px ;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 40px;
+}
+
+.login-form input[type="submit"] {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-form input[type="submit"]:hover {
+  background-color: #800000;
+}
+
+.register-form {
+  max-width: 400px;
+  margin: 50px auto;
+  background-color: black;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.register-form h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: red;
+}
+
+.register-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 10px;
+  border-radius: 40px;
+}
+
+.register-form input[type="submit"] {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register-form input[type="submit"]:hover {
+  background-color: #800000;
+}
+
+.car-container {
+  margin: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+/* add margin to car-specs */
+.car-specs {
+  margin: 20px;
+  max-width: 500px;
+  padding-bottom: 50px;
+}
+
+/* style buy-button */
+.buy-button {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+/* hover effect for buy-button */
+.buy-button:hover {
+  background-color: red;
+  color: white;
+}
+
+/* style footer */
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  height: 150px;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  color: red;
+}
+
+a {
+  color: red;
+}
+
+a:hover {
+  color: black;
+}
+
+button {
+  background-color: red;
+  color: black;
+}
+
+button:hover {
+  background-color: black;
+  color: red;
+}

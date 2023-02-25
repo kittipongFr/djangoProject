@@ -1,0 +1,95 @@
+{% extends 'backend/baseback.html' %}
+{% load static %}
+{% block content %}
+    {% load humanize %}
+<div class="container-fluid py-4 ">
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4 boxs">
+            <div class="card-header pb-0">
+                <h4 class="text-center">รายงานการค้นหา</h4>
+            </div>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                 <div class="table-responsive">
+     <table class="table align-items-center table-hover">
+        <thead>
+            <tr class="bg-gradient-success text-white">
+
+                <th class="text-center">รายงาน</th>
+                <th>ข้อมูล</th>
+
+            </tr>
+        </thead>
+     <tbody>
+        <tr>
+            {% for transaction in reportDay %}
+                <tr>
+
+                    <td class="text-center">ข้อมูล(วัน/เดือน/ปี)</td>
+                    <td class="text-start">{{ transaction.date }}</td>
+                </tr>
+                <tr>
+
+                    <td class="text-center">จำนวนครั้งการเช่า</td>
+                    <td class="text-start">{{ transaction.count }}</td>
+                </tr>
+                <tr>
+
+                    <td class="text-center">ยอดรวม</td>
+                    <td class="text-start">{{ transaction.total | floatformat:2 | intcomma }} </td>
+                </tr>
+
+     {% endfor %}
+
+        </tbody>
+    </table>
+
+            </div>
+            <div class="col-2"></div>
+        </div>
+
+<div class="col-2"></div>
+        <div class="col-12">
+              <table class="table ">
+
+                <thead >
+                <tr class="text-start bg-gradient-warning text-dark">
+<th></th><th>รหัสการเช่า</th><th>วันที่เช่า</th><th>เลขทะเบียน</th><th>ยี่ห้อ</th><th>รุ่น</th><th>ราคา/วัน</th>
+                </tr>
+                </thead>
+<tbody>
+        {% for rent in list_rent %}
+            <tr class="text-start">
+            <td></td>
+                    <td>&nbsp&nbsp{{ rent.rent_id }}</td>
+                 <td>&nbsp&nbsp{{ rent.rent_date }}</td>
+                <td>&nbsp&nbsp{{ rent.car.car_id }}</td>
+                    <td>&nbsp&nbsp{{ rent.car.brand }}</td>
+            <td>&nbsp&nbsp{{ rent.car.car_model }}</td>
+            <td>&nbsp&nbsp{{ rent.getTotalrent | floatformat:2 | intcomma  }}</td>
+                </tr>
+
+                 {% endfor %}
+            </tbody>
+            </table>
+        </div>
+
+
+
+
+          </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+
+
+
+{% endblock %}

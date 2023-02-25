@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+    <!-- End Navbar -->
+{% block content %}
+    <div class="container-fluid py-4 ">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4 boxs">
+            <div class="card-header pb-0">
+              <h6>รายละเอียดบิลการเช่า</h6>
+                <p>เลขที่การเช่า : {{ rents.rent_id }}  ชื่อผู้เช่า : {{ rents.mem_id.name }}</p>
+                 <p>เช่าวันที่ : {{ rents.return_date }}</p>
+       {% if rents.status in '1 , 2,  3 , 4,  5' %}
+                      <span class="badge badge-xl text-white bg-success"  style="font-size: 15pt">{{ rents.getStatus }} </span>
+                        {% else %}
+                        <span class="badge badge-xl text-white bg-danger"  style="font-size: 15pt">{{ rents.getStatus }} </span>
+                    {% endif %}
+            </div>
+
+
+          <div class="row">
+              <div class="col-2"></div>
+              <div class="col-8">
+
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+
+                <table class="table align-items-center mb-0">
+                 <h3 class="text-center">รายการเช่ารถ</h3>
+                  <thead>
+                    <tr>
+
+                      <th class="text-uppercase text-whitetext-xl font-weight-bolder opacity-7 ps-2">เลขทะเบียนรถ</th>
+                      <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">ยี่ห้อรถ</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">รุ่น</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">ประเภทรถ</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">ราคา/วัน</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+
+
+                    <tr>
+
+                      <td>
+                         <p class=" mb-0 ">{{ rents.car.car_id }}</p>
+                      </td>
+                        <td>
+                        <p class=" mb-0 text-center">{{ rents.car.brand }}</p>
+                      </td>
+                         <td>
+                        <p class=" mb-0 text-center">{{ rents.car.car_model }}</p>
+                      </td>
+                        <td>
+                        <p class=" mb-0 text-center">{{ rents.car.type_id.type_name }}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class=" mb-0 text-center">{{ rents.car.price }}</p>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+                      </div>
+              <div class="col-2"></div>
+          </div>
+    <div class="row">
+          <div class="col-7 text-center">
+              
+              <img src="{{ rents.car.img.url }}">
+          </div>
+          <div class="col-5">
+    <div class="card-header ">
+        <h6>รายละเอียด : </h6>
+        <p style="font-size: 15pt">รับรถ : <span class="text-warning">{{ rents.rent_date }}</span>   </p>
+        <p style="font-size: 15pt"> คืนรถ : <span class="text-warning">{{ rents.return_date }}</span></p>
+        <p style="font-size: 15pt">จำนวน : <span class="text-warning">{{ rents.amount }}</span> วัน</p>
+
+        <h6  style="font-size: 18pt">รวมทั้งสิ้น : <span class="text-danger"> {{ rents.getTotalrent | floatformat:2 | intcomma }}</span> บาท</h6>
+            </div>
+
+              {% if rents.status == '1' %}
+
+                  <a class="btn btn-danger"  href="{% url 'rentCancel' rents.rent_id  rents.car.car_id %}"  >ยกเลิก</a>
+
+                  {% elif rents.status == '2' or rents.status == '3.1' %}
+                  <a class="btn btn-primary"  href="{% url 'memPayment' rents.rent_id %}"  >แจ้งชำระ</a>
+
+
+   {% elif rents.status in  '4 , 5'  %}
+
+                      <a class="btn btn-danger" target="_blank"   href="{% url 'pdfReceipt' rents.rent_id %}" >print <i class="fa fa-file-pdf"></i></a>
+              {% endif %}
+          <a class="btn btn-warning text-white" target="_blank"   href="/" >กลับ <i class="fa fa-close"></i></a>
+
+          <div class="container mx-auto mt-xl-4">
+              {% if rents.status in "3,4,5" or rents.status == "3.1"  %}
+                  {% for p in pay %}
+               <div class="card">
+              <h1 class="text-center">ข้อมูลการชำระ</h1>
+              <img src="{{ p.slip_img.url }}">
+                      <div class="card-header text-center">
+                      <p style="font-size: 15pt">รหัสการชำระ : {{ p.pay_id }}</p>
+                      <p style="font-size: 15pt">ชำระทั้งสิ้น : {{ p.pay_total }}</p>
+                        <p style="font-size: 15pt">ชำระเมื่อ : {{ p.pay_date }}</p>
+                      <p style="font-size: 15pt">ธนาคาร : {{ p.bank.name }}</p>
+                      <p style="font-size: 15pt">สาขา : {{ p.bank.branch }}</p>
+                      </div>
+                      </div>
+                  {% endfor %}
+
+
+
+              {% endif %}
+
+
+
+
+          </div>
+
+
+
+
+</div>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+        </div>
+     {% endblock %}

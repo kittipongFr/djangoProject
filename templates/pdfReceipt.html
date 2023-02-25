@@ -1,0 +1,155 @@
+
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <link rel="stylesheet" href="{% static 'mainstylesheets/css/bootstrap.min.css' %}">
+      <!-- style css -->
+      <link rel="stylesheet" href="{% static 'mainstylesheets/css/style.css' %}">
+      <!-- Responsive-->
+      <link rel="stylesheet" href="{% static 'mainstylesheets/css/responsive.css' %}">
+      <!-- fevicon -->
+      <link rel="icon" href="{% static 'mainstylesheets/images/fevicon.png"' %}" type="image/gif" />
+      <!-- Scrollbar Custom CSS -->
+      <link rel="stylesheet" href="{% static 'mainstylesheets/css/jquery.mCustomScrollbar.min.css' %}">
+      <!-- Tweaks for older IEs-->
+      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+
+    <meta charset="UTF-8">
+    <title>ใบเสร็จ</title>
+</head>
+<body>
+<table align="top">
+    <tr>
+    <td >
+
+    </td>
+
+    <td></td>
+
+    <td>
+        <p style="font-size: 9pt" align="right">ที่อยู่ : {{ rent.own_id.address }} </p>
+        <p style="font-size: 9pt" align="right">จังหวัด : {{ rent.own_id.provinces.name_th }}  </p>
+
+        <img style="width: 250px;height: 90px;" align="left top" src="../static/image/types/Pink-Button.png">
+            <p style="font-size: 9pt" align="center">เลขที่ : {{ rent.rent_id }}  </p>
+
+    </td>
+    </tr>
+
+
+</table>
+
+<table  width="90%" border="1"  align="center">
+   <tr>
+                <td align="left">
+             <p style="font-size: 9pt" >ชื่อลูกค้า : {{ rent.mem_id.name }}</p>
+        <p style="font-size: 9pt">Email : {{ rent.mem_id.email }}</p>
+                    <p style="font-size: 9pt" >เบอร์โทร : {{ rent.mem_id.tel }}</p>
+
+                </td>
+    <td align="top">
+        <p style="font-size: 9pt" align="left">วันที่ : {{ pay.pay_date }}</p>
+        <p style="font-size: 9pt" align="left">ชำระโดย : โอนชำระ</p>
+        <p>-</p>
+    </td>
+    <td align="top">
+        <p style="font-size: 9pt" align="left">ผู้ให้เช่า : {{ rent.own_id.name }}</p>
+        <p style="font-size: 9pt" align="left">E-mail : {{ rent.own_id.email }}</p>
+        <p style="font-size: 9pt" align="left">เบอร์โทร : {{ rent.own_id.tel }}</p>
+
+    </td>
+</tr>
+</table>
+
+            <table width="90%" style="margin-top: 10px"  align="center">
+ <thead>
+                <tr style="background-color: #72EFA4">
+                     <th width="10%"    ><p >ลำดับ</p></th>
+                    <th width="20%"  >เลขทะเบียน</th>
+                    <th width="25%"  ><p>ยี่ห้อ-รุ่นรถ</p></th>
+                     <th width="15%"   ><p>ราคา/วัน</p></th>
+                    <th  width="15%" >จำนวนวัน</th>
+                    <th width="15%" >จำนวนเงิน</th>
+                </tr>
+                </thead>
+            </table>
+
+               <table width="90%"  border="0.2" align="center">
+
+
+                <tr   style="height: 400px; ">
+                    <td width="10%"  style="vertical-align: top;text-align: center" ><p >1</p></td>
+                    <td width="20%"  style="vertical-align: top;text-align: left">{{ rent.car.car_id }}</td>
+                    <td width="25%"  style="vertical-align: top;text-align: left" ><p>{{ rent.car.brand }} {{ rent.car.car_model }}</p></td>
+                     <td width="15%"  style="vertical-align: top;text-align: right" ><p>{{ rent.price }}</p></td>
+                    <td  width="15%" style="vertical-align: top;text-align: right">{{ rent.amount }}</td>
+                    <td width="15%" style="vertical-align: top;text-align: right">{{ rent.getTotalrent | floatformat |intcomma }}</td>
+
+                </tr>
+            </table>
+
+<table width="90%" style="margin-top: 20px"  align="center">
+    <tr>
+        <td width="45%"></td>
+
+        <td width="28%"  style="vertical-align: top;text-align: left">
+            <p>วันที่รับรถ : </p>
+            <p>วันที่คืนรถ : </p>
+            <p>ราคาเช่าก่อนรวมภาษี : </p>
+            <p>จำนวนภาษีมูลค่าเพิ่ม 7% : </p>
+            <p>รวมเป็นเงินทั้งสิ้น : </p>
+        </td>
+
+
+        <td width="25%"  style="vertical-align: top;text-align: right">
+            <p>{{ rent.rent_date }}</p>
+            <p>{{ rent.return_date }}</p>
+            <p>{{ rent.getAfterVat| floatformat:2 |intcomma  }}</p>
+            <p>{{ rent.getVat | floatformat:2 |intcomma  }}</p>
+            <p>{{ rent.getTotalrent | floatformat:2 |intcomma  }}</p>
+
+        </td>
+
+
+    </tr>
+
+
+</table>
+
+
+    <p align="center" style="margin-top: 50px">ขอบคุณที่ใช้บริการ Thank You</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <script src="{% static 'mainstylesheets/js/jquery.min.js'%}"></script>
+      <script src="{% static 'mainstylesheets/js/popper.min.js'%}"></script>
+      <script src="{% static 'mainstylesheets/js/bootstrap.bundle.min.js'%}"></script>
+      <script src="{% static 'mainstylesheets/js/jquery-3.0.0.min.js'%}"></script>
+      <!-- sidebar -->
+      <script src="{% static 'mainstylesheets/js/jquery.mCustomScrollbar.concat.min.js'%}"></script>
+      <script src="{% static 'mainstylesheets/js/custom.js'%}"></script>
+</body>
+</html>

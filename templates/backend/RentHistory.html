@@ -1,0 +1,99 @@
+{% extends 'backend/baseback.html' %}
+{% load static %}
+    <!-- End Navbar -->
+{% block content %}
+    <div class="container py-4 ">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4 boxs">
+            <div class="card-header pb-0">
+              <h5>รายละเอียดบิลการเช่า
+    <span class="badge badge-sm bg-danger text-white" onclick="location.href='/CarRental/backend/';" style="cursor:pointer;">กลับ <i class="fa fa-close"></i></span></h5>
+
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-whitetext-xl font-weight-bolder opacity-7">เลขที่เช่า</th>
+                      <th class="text-uppercase text-whitetext-xl font-weight-bolder opacity-7 ps-2">วันรับรถ</th>
+                      <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">วันคืนรถ</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">ชื่อผู้เช่า</th>
+                      <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">สถานะ</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">รายละเอียด</th>
+                      <th class="text-whiteopacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+
+
+                  {% for r in rent %}
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+
+                          <div class=" d-flex flex-column justify-content-center ">
+                            <h6 class="text-center mx-auto text-sm">{{ r.rent_id }}</h6>
+
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                         <p class=" mb-0 ">{{ r.rent_date }}</p>
+                      </td>
+                        <td>
+                        <p class=" mb-0 text-center">{{ r.return_date }}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class=" mb-0 text-center">{{ r.mem_id.name }}</p>
+                      </td>
+
+                      <td class="align-middle text-center">
+                            <p class=" mb-0 text-center">{{ r.getStatus }}</p>
+                      </td>
+                      <td class="align-middle text-center">
+
+    <span class="badge badge-sm bg-primary text-white" onclick="location.href='{% url 'backend_RentHistoryDetails' r.rent_id %}';" style="cursor:pointer;">รายละเอียด <i class="fa fa-dochub"></i></span>
+
+                      </td>
+                    </tr>
+                {% endfor %}
+                  </tbody>
+                </table>
+
+    <div class="text-center">
+        {% if rent.has_other_pages %}
+            <div class="btn-group text-center" role="group" aria-label="Item pagination">
+                {% if type.has_previous %}
+                    <a href="{% url 'backend_RentHistory' rent.previous_page_number %}" class="btn btn-outline-primary">&laquo;</a>
+                {% endif %}
+
+                {% for page_number in rent.paginator.page_range %}
+                    {% if rent.number == page_number %}
+                        <button class="btn btn-outline-primary active">
+                            <span>{{ page_number }} <span class="sr-only">(current)</span></span>
+                        </button>
+                    {% else %}
+                        <a href="{% url 'backend_RentHistory' page_number %}" class="btn btn-outline-primary">
+                            {{ page_number }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if rent.has_next %}
+                    <a href="{% url 'backend_RentHistory' rent.next_page_number %}" class="btn btn-outline-primary">&raquo;</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+     {% endblock %}

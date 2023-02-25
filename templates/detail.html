@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+    <style>
+        .car-detail {
+            background-color: #f2f2f2;
+            padding: 50px 0;
+        }
+
+        .car-image {
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .car-info {
+            margin-top: 30px;
+        }
+
+        .car-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .car-description {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .car-price {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .buy-btn {
+            background-color: #00cc0a;
+            border-color: #fcfcfc;
+            font-weight: bold;
+            font-size: 18px;
+            padding: 10px 30px;
+            border-radius: 30px;
+            margin-top: 30px;
+        }
+
+        .buy-btn:hover {
+            background-color: #4ad95a;
+            border-color: #ffffff;
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mitr">
+    <style>
+        body {
+            font-family: "Mitr", serif;
+        }
+
+        .card .card-body {
+            font-family: "Mitr", serif;
+        }
+
+
+        .box {
+            background-image: linear-gradient(to top, #ef69ed, #b62cd9);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            margin: 20px;
+            height: 100px;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .box h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e8e2e2;
+        }
+
+        .box p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+    </style>
+
+
+    <div class="container car-detail mt-xl-4  mb-xl-4">
+
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="text-center" style="font-size: 30pt">รายละเอียดรถยนต์</h1>
+                <div class="row ">
+
+                        <img src="{{ car.img.url }}" alt="Car Image" class="img-fluid car-image mx-auto">
+                    <div class="col-md-6">
+                         <div class="box">
+                            <h1 class="car-title text-white">{{ car.brand }} {{ car.car_model }}</h1>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 car-info mx-auto">
+
+                        <h2><strong></strong> {{ car.brand }} {{ car.car_model }}</h2>
+                        <p><strong>ผู้ให้เช่า:</strong> {{ car.own_id.name }}</p>
+                        <p><strong>จังหวัด:</strong> {{ car.provinces.name_th }}</p>
+
+                        <p><strong>ประเภทเกียร์:</strong> {{ car.gearType }}</p>
+                        <p class="car-price">฿{{ car.price | floatformat:2 | intcomma }} / วัน</p>
+                        <p>Color: Red</p>
+
+                        <p class="car-description"><strong>Details :</strong> {{ car.desc }}</p>
+                        <a class="buy-btn btn text-white" href="">คลิ๊กที่นี่เพื่อดูแผนที่ <i class="fa fa-map-location"></i> </a>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="col-md-4 border-left">
+                <h1 class="text-center" style="font-size: 30pt">ข้อมูลการจอง</h1>
+                <form method="post">
+                {% csrf_token %}
+
+                        {% if request.session.userStatus == "member" %}
+                            <div class="row">
+                        <div class="col-12">
+                            <div class="form-group ">
+                                <label for="name" class="form-control-label">ชื่อ-สกุล</label>
+                                <input class="form-control " maxlength="8" readonly type="text" value="{{ mem.name }}" name="id" id="id">
+                            </div>
+
+
+                            <div class="form-group ">
+                                <label for="name" class="form-control-label">E-mail</label>
+                                <input class="form-control " maxlength="8" readonly type="text" value="{{ mem.email }}" name="id" id="id">
+                            </div>
+
+
+                            <div class="form-group ">
+                                <label for="name" class="form-control-label">tel</label>
+                                <input class="form-control " maxlength="8" readonly type="text" value="{{ mem.tel }}" name="id" id="id">
+                            </div>
+
+
+                            <div class="form-group ">
+                                <label for="name" class="form-control-label">วันรับรถ</label>
+                                <input class="form-control" maxlength="8" required type="date" value="{{ request.session.rent_date }}" name="rent_date" id="id">
+                            </div>
+                                <input type="hidden" name="own" value="{{ car.own_id.own_id }}">
+                                <input type="hidden" name="price" value="{{ car.price }}">
+                             <input type="hidden" name="mem" value="{{ request.session.userId }}">
+
+                            <div class="form-group ">
+                                <label for="name" class="form-control-label">วันคืนรถ</label>
+                                <input class="form-control " maxlength="8" required type="date" value="{{ request.session.return_date }}" name="return_date" id="id">
+                            </div>
+                            <div class="alert alert-warning">หากต้องการแก้ไขข้อมูล <span class="btn btn-outline-success" onclick="location.href='{% url 'memberedit' %}'">คล๊กที่นี่</span></div>
+                    <input type="submit" class="btn btn-primary text-white  mx-auto buy-btn" value="เช่ารถ" >
+                        {% else %}
+                           <div class="alert alert-warning">กรุณาสมัครสมาชิกเพื่อเช่ารถ <span class="btn btn-outline-success" onclick="location.href='{% url "Member_Register" %}'">คล๊กที่นี่</span></div>
+                        {% endif %}
+
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+
+    </div>
+    </div>
+
+
+{% endblock %}

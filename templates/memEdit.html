@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- End Navbar -->
+{% block content %}
+    <div class="container py-4 ">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4 boxs">
+
+                    <div class="card-header pb-0">
+                        <div class="row">
+                        <div class="col-2 "><h6>โปรไฟล์</h6>
+
+                        </div>
+                        <div class="col-8 ">
+
+                        </div>
+                        </div>
+
+                    </div>
+
+                    <div class="card-body pb-2">
+
+                        <form role="form" method="POST" action="{% url 'memberedit' %}"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            {% if eror %}
+                                <div class="col-lg-4 ">
+                                    <div class="alert alert-danger text-white" role="alert">
+                                        <strong>ข้อผิดพลาด !</strong> ทะเบียนรถนี้เคยลงทะเบียนในระบบแล้ว!
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+
+                                <div class="form-group ">
+                                        <label for="province" class="form-control-label ">Username</label>
+                                        <input class="form-control" readonly value="{{ mem.mem_id }}" name="username">
+                                    </div>
+                                <div class="form-group ">
+                                        <label for="province" class="form-control-label ">ชื่อ-สกุล</label>
+                                        <input class="form-control" required value="{{ mem.name }}" name="name">
+                                    </div>
+                                <div class="form-group ">
+                                        <label for="province" class="form-control-label ">E-mail</label>
+                                        <input class="form-control" required value="{{ mem.email }}" name="email">
+                                    </div>
+                                <div class="form-group ">
+                                        <label for="province" class="form-control-label ">Tel</label>
+                                        <input class="form-control" required value="{{ mem.tel }}" name="tel">
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="province" class="form-control-label ">จังหวัด</label>
+                                        <select class="form-control"  name="province" id="province">
+                                                <option value="{{ mem.provinces.id }}">{{ mem.provinces.name_th }}</option>
+                                            {% for pv in provinces %}
+                                                <option value="{{ pv.id }}">{{ pv.name_th }}</option>
+
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+
+                                </div>
+
+
+                            <div class="col-md-6">
+{#                                 <p>{{ mem.name }}</p>#}
+{#                                <p>{{ mem.email }}</p>#}
+{#                                <p>{{ mem.tel }}</p>#}
+{#                                <p>{{ mem.provinces.name_th }}</p>#}
+{##}
+
+
+
+
+                            </div>
+
+                            </div>
+
+
+                        <div class="row">
+                                <div class="col-6">
+                                    <a href="{% url 'memChangePassword' %}" class="text-primary">ต้องการเปลี่ยนรหัสหรือไม่?</a>
+                                    <div class="form-group">
+                                        <button type="submit" href="#" class="btn btn-warning px-3 py-2"><i class="fa fa-save"></i> แก้ไข</button>
+                                        <a onclick="history.back()" class="btn btn-danger text-white px-3 py-2 ">กลับ <i class="fa fa-close"></i> </a>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                    </div>
+
+
+                    <div class="card-footer pb-0">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}

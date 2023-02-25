@@ -1,0 +1,156 @@
+{% load static %}
+{% load fontawesome_6 %}
+{% fontawesome_6_static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'assets/img/apple-icon.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'assets/img/favicon.png' %}">
+  <title>
+  Dashboard
+  </title>
+
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="{% static 'assets/css/nucleo-icons.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <!-- Font Awesome Icons -->
+{#  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>#}
+  <link href="{% static 'assets/css/nucleo-svg.css' %}" rel="stylesheet" />
+  <!-- CSS Files -->
+<link href="{% static 'mainstylesheets/css/bootstrap.css' %}" rel="stylesheet" />
+{#  <link id="pagestyle" href="{% static 'assets/css/argon-dashboard.css' %}?v=2.0.4" rel="stylesheet" />#}
+
+{#        <link href="{% static 'mainstylesheets/css/style.css' %}">#}
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mitr">
+    <style>
+        .boxs{
+             box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+        }
+    body {
+        font-family: "Mitr", serif;
+    }
+
+    .card .card-body{
+    font-family: "Mitr", serif;
+    }
+    </style>
+</head>
+
+<body style="background-image: linear-gradient(to top, #f318e1, #b863d3);">
+
+<div class="w3-sidebar w3-bar-block w3-dark-grey w3-animate-left" style="display:none" id="mySidebar">
+  <button class="w3-bar-item w3-button w3-large"
+  onclick="w3_close()">Close <i class="fa fa-door-open"></i></button>
+        <a href="/CarRental/backend" class="w3-bar-item w3-button">Home <i class="fa fa-home"></i></a>
+  <a href="/CarRental/backend/car_type/1" class="w3-bar-item w3-button">ประเภทรถยนต์ <i class="fa fa-car-side"></i> </a>
+<a href="/CarRental/backend/Memberlist/1" class="w3-bar-item w3-button">ผู้ใช้ระบบ <i class="fa fa-user"></i></a>
+  <a href="/CarRental/backend/car/1" class="w3-bar-item w3-button">รถยนต์ <i class="fa fa-car"></i></a>
+  <a href="{% url 'address' %}" class="w3-bar-item w3-button">สถานที่รับรถ <i class="fa fa-bank"></i></a>
+    <a href="/CarRental/backend/bank/1" class="w3-bar-item w3-button">บัญชีธนาคาร <i class="fa fa-piggy-bank"></i></a>
+  <a href="/CarRental/backend/rent/1" class="w3-bar-item w3-button">บิลการเช่า <i class="fa fa-money-bill"></i></a>
+    <a href="/CarRental/backend/rentHistory/1" class="w3-bar-item w3-button">ประวัติการเช่า <i class="fa fa-money-bill-1-wave"></i></a>
+
+      {% if request.session.userId %}
+                    {% if request.session.userStatus == 'owner' or request.session.userStatus == 'admin' %}
+                        <a href="/CarRental/backend" class="w3-bar-item w3-button bg-warning">User : {{ request.session.userName }} <i class="fa fa-user"></i></a>
+
+                    <a href="{% url 'logout' %}" class="w3-bar-item w3-button bg-warning boxs">
+                <span class="d-sm-inline d-none text-white btn btn-danger">LogOut</span>
+              </a>
+                         {% endif %}
+               {% else %}
+
+              <a href="{% url 'signIn' %}" class="w3-bar-item w3-button ">
+                <i class="fa fa-user me-sm-1"></i>
+                <span class="d-sm-inline d-none text-white btn btn-success">Sign In</span>
+              </a>
+                 {% endif %}
+
+</div>
+
+<div>
+<div class="row">
+    <div class="col"><button class="w3-button w3-white  w3-xxlarge py-8" style="box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);" onclick="w3_open()">&#9776; <span class="text-sm " style="font-size: 15pt;">จัดการระบบ</span></button></div>
+    <div class="col" style="text-align: right;"> {% if request.session.userId %}
+                    {% if request.session.userStatus == 'owner' or 'admin' %}
+                        <a href="/CarRental/backend"  class="w3-bar-item w3-button text-white" >User : {{ request.session.userName }} <i class="fa fa-user"></i></a>
+
+                    <a href="{% url 'logout' %}" class="w3-bar-item w3-button  ">
+                <span style="background-image: linear-gradient(to top, #cb1545, #d5083f);" class="d-sm-inline d-none text-white btn  boxs">LogOut</span>
+              </a>
+                         {% endif %}
+               {% else %}
+
+              <a href="{% url 'signIn' %}" class="w3-bar-item w3-button ">
+                <i class="fa fa-user me-sm-1"></i>
+                <span class="d-sm-inline d-none text-white btn btn-success">Sign In</span>
+              </a>
+                 {% endif %}
+</div>
+</div>
+
+
+
+
+
+  <div class="w3-container">
+   {% block content %}
+
+          {% endblock %}
+
+
+  </div>
+</div>
+
+
+
+
+<script>
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+}
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+}
+</script>
+
+  <!--   Core JS Files   -->
+  <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/perfect-scrollbar.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/smooth-scrollbar.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/chartjs.min.js' %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+  {% block script %}
+
+  {% endblock %}
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mitr">
+    <style>
+    body {
+        font-family: "Mitr", serif;
+    }
+
+    .card .card-body{
+    font-family: "Mitr", serif;
+    }
+    </style>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="{% static 'assets/js/argon-dashboard.min.js' %}?v=2.0.4"></script>
+</body>
+
+</html>

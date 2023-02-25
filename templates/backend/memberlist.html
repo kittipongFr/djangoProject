@@ -1,0 +1,90 @@
+{% extends 'backend/baseback.html' %}
+{% load static %}
+{% block content %}
+    <div class="container py-4 ">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4 boxs">
+            <div class="card-header pb-0">
+              <h5>Car Types table  <span class="badge badge-xl text-white bg-success" onclick="location.href='{% url 'Member_add' %}';" style="cursor:pointer;">เพิ่มข้อมูล<i class="fa fa-plus-circle"></i></span>
+              <span class="badge badge-sm text-white bg-danger" onclick="location.href='/CarRental/backend/'" style="cursor:pointer;" >กลับ<i class="fa fa-close"></i></span></h5>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xl font-weight-bolder opacity-7">Mem_Id</th>
+                      <th class="text-uppercase text-secondary text-xl font-weight-bolder opacity-7 ps-2">ชื่อ-สกุล</th>
+                      <th class="text-center text-uppercase text-secondary text-xl font-weight-bolder opacity-7">E-mail</th>
+                      <th class="text-center text-uppercase text-secondary text-xl font-weight-bolder opacity-7">จังหวัด</th>
+                        <th class="text-center text-uppercase text-secondary text-xl font-weight-bolder opacity-7"></th>
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                  {% for m in mem %}
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+
+                          <div class=" d-flex flex-column justify-content-center ">
+                            <h6 class="text-center mx-auto text-sm">{{ m.mem_id }}</h6>
+
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-secondary mb-0">{{ m.name }}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                       <p class="text-secondary mb-0">{{ m.email }}</p>
+                      </td>
+
+                      <td class="align-middle text-center">
+                       <p class="text-secondary mb-0">{{ m.provinces.name_th }}</p>
+                      </td>
+                    <td class="align-middle text-center">
+
+                    </td>
+
+                    </tr>
+                {% endfor %}
+                  </tbody>
+                </table>
+
+    <div class="text-center">
+        {% if type.has_other_pages %}
+            <div class="btn-group text-center" role="group" aria-label="Item pagination">
+                {% if mem.has_previous %}
+                    <a href="{% url 'memRentList' mem %}" class="btn btn-outline-primary">&laquo;</a>
+                {% endif %}
+
+                {% for page_number in mem.paginator.page_range %}
+                    {% if mem.number == page_number %}
+                        <button class="btn btn-outline-primary active">
+                            <span>{{ page_number }} <span class="sr-only">(current)</span></span>
+                        </button>
+                    {% else %}
+                        <a href="{% url 'memRentList' page_number %}" class="btn btn-outline-primary">
+                            {{ page_number }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if mem.has_next %}
+                    <a href="{% url 'memRentList' mem.next_page_number %}" class="btn btn-outline-primary">&raquo;</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+     {% endblock %}

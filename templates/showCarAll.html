@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+    <style>
+        .product-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .product-img {
+            height: 100%;
+            object-fit: scale-down;
+        }
+
+    </style>
+
+    <style>
+        .box {
+            background-image: linear-gradient(to top, #eca86a, #d35e12);
+            border-radius: 10px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            margin: 20px;
+            height: 100px;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .box h2 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .box p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+
+        .navbar-collapse {
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar-nav {
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-option label {
+            margin-right: 10px;
+        }
+
+
+        input[type="date"] {
+            border: 1px solid #ced4da;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+
+
+    </style>
+
+
+
+
+
+
+    <div class="container-fluid" style="background-color: black">
+        <nav class="navbar navbar-expand-lg navbar-light rounded ">
+            <div class="container-fluid">
+                <div class="navbar-collapse justify-content-center" id="navbarNav">
+
+                    <form id="car-form" class="d-flex mx-auto" method="post" action="{% url 'showCarAll' %}">
+                        {% csrf_token %}
+                        <ul class="navbar-nav">
+                            <li class="nav-item" style="">
+                                <label for="rc_date" class="text-white">วันรับรถ</label>
+                                <input class="" required type="date" value="{{ request.session.rent_date }}"
+                                       name="rc_date">
+                            </li>
+                            &nbsp;&nbsp;
+                            <li class="nav-item">
+                                <label for="rt_date" class="text-white">วันคืนรถ</label>
+                                <input class="" required value="{{ request.session.return_date }}" type="date"
+                                       name="rt_date">
+                            </li>
+                            &nbsp;
+                            <li class="nav-item">
+                                <label for="provinces" class="text-white">จังหวัด</label>
+                                <select id="provinces-select" name="provinces" class="mx-auto">
+                                    <option value="{{ request.session.province }}">{{ province_one.name_th }}</option>
+                                    {% for pv in provinces %}
+                                        <option value="{{ pv.id }}">{{ pv.name_th }}</option>
+                                    {% endfor %}
+                                </select>
+
+                                <label for="type" class="text-white">ประเภท :</label>
+                                <select id="type" name="type" class="mx-auto">
+                                    {% if request.session.type == "0" %}
+                                        <option value="0">All</option>
+                                    {% else %}
+                                        <option value="{{ request.session.type }}">{{ type_one.type_name }}</option>
+                                        <option value="0">All</option>
+
+                                    {% endif %}
+
+                                    {% for t in carType %}
+                                        <option value="{{ t.type_id }}">{{ t.type_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </li>
+
+                            <li class="nav-item">
+                                <label for="price" class="text-white">Price:</label>
+                                <select id="price" name="price" class="mx-auto">
+                                    {% if request.session.price == '0-10000' %}
+                                        <option value="0-10000">All</option>
+                                    {% else %}
+                                        <option value="{{ request.session.price }}">{{ request.session.price }}</option>
+                                        <option value="0-10000">All</option>
+                                    {% endif %}
+
+                                    <option value="0-1000">0-1,000</option>
+                                    <option value="1000-2000">1,000-2,000</option>
+                                    <option value="2000-3000">2,000-3,000</option>
+                                </select>
+                                <i class="fa fa-filter text-white"></i>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+
+    <main>
+
+        <section class="products mt-5 mb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <h2 class="text-dark">เลือกรถที่ท่านต้องการได้เลย</h2>
+                    </div>
+                    <div class="col">
+                        {#                      <form id="fill-form" class="mx-auto d-block mb-0" method="post" action="{% url 'showCarAll' %}">#}
+                        {#                       {% csrf_token %}#}
+                        <ul class="navbar-nav ml-auto ">
+
+                        </ul>
+
+                    </div>
+                </div>
+
+
+                <div class="row" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);">
+                    {% if no_cars_message %}
+                        <div class="col-12 "><br>
+                            <div class="alert alert-warning text-center" style="font-size: 50pt" role="alert">
+                                {{ no_cars_message }} <i class="fa fa-robot"></i>
+                            </div>
+                        </div>
+                    {% else %}
+                        {% for c in car %}
+                            <div class="col-md-6">
+                                <div class="product-card d-flex flex-column">
+                                    <img class="product-img" src="{{ c.img.url }}" alt="{{ c.car_model }}">
+                                    <div class="product-info">
+                                        <h1 class="product-title">{{ c.brand }} {{ c.car_model }} <p
+                                                class="product-description">{{ c.price | floatformat | intcomma }}บาท/วัน</p>
+                                        </h1>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <span class="badge badge-info">{{ c.gearType }}</span><br>
+                                                <span class="badge badge-success mt-2">{{ c.seat }} ที่นั่ง</span><br>
+                                                <span class="text-sm mt-3" style="font-size: 10pt">เช่ารถ : <span
+                                                        class="text-danger">{{ request.session.rent_date }}</span>
+                                            </div>
+                                            <div class="col-4">
+
+                                                <span class="badge badge-warning ">จังหวัด : {{ c.provinces.name_th }}</span><br>
+                                                <span class="badge badge-success mt-2">ประเภท : {{ c.type_id.type_name }}</span>
+                                                <br>
+                                                <span class="text-sm mt-3" style="font-size: 10pt"> คืนรถ :
+                                                    <span class="text-danger">{{ request.session.return_date }}</span></span><br>
+
+
+                                            </div>
+                                            <div class="col-4">
+                                                 <a href="{% url 'carDetail' c.car_id %}"
+                                                   class="btn btn-primary buy-btn mt-2">ดูรายละเอียด <i
+                                                        class="fa fa-magnifying-glass"></i></a>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+
+    <script>
+        const form = document.querySelector('#car-form');
+        const inputs = form.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('change', () => {
+                form.submit();
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+{% endblock %}

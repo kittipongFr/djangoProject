@@ -1,0 +1,145 @@
+{% extends 'backend/baseback.html' %}
+{% load humanize %}
+{% load static %}
+    <!-- End Navbar -->
+{% block content %}
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4 boxs">
+          <h1 class="text-center">ยืนยันการเช่า</h1>
+            <div class="card-header pb-0">
+              <h6>รายละเอียดบิลการเช่า</h6>
+                <p>เลขที่การเช่า : {{ rents.rent_id }}  ชื่อผู้เช่า : {{ rents.mem_id.name }}</p>
+                 <p>เช่าวันที่ : {{ rents.return_date }}</p>
+  {% if rents.status in '1 , 2,  3 , 4,  5' %}
+                      <span class="badge badge-xl bg-success text-white"  style="font-size: 15pt">{{ rents.getStatus }} </span>
+                        {% else %}
+                        <span class="badge badge-xl bg-danger text-white"  style="font-size: 15pt">{{ rents.getStatus }} </span>
+                    {% endif %}
+            </div>
+
+
+          <div class="row">
+              <div class="col-2"></div>
+              <div class="col-8">
+
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+
+                <table class="table align-items-center mb-0">
+                 <h3 class="text-center">รายการเช่ารถ</h3>
+                  <thead>
+                    <tr>
+
+                      <th class="text-uppercase text-whitetext-xl font-weight-bolder opacity-7 ps-2">เลขทะเบียนรถ</th>
+                      <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">ยี่ห้อรถ</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">รุ่น</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">ประเภทรถ</th>
+                        <th class="text-center text-uppercase text-whitetext-xl font-weight-bolder opacity-7">ราคา/วัน</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+
+
+                    <tr>
+
+                      <td>
+                         <p class=" mb-0 ">{{ rents.car.car_id }}</p>
+                      </td>
+                        <td>
+                        <p class=" mb-0 text-center">{{ rents.car.brand }}</p>
+                      </td>
+                         <td>
+                        <p class=" mb-0 text-center">{{ rents.car.car_model }}</p>
+                      </td>
+                        <td>
+                        <p class=" mb-0 text-center">{{ rents.car.type_id.type_name }}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                        <p class=" mb-0 text-center">{{ rents.car.price }}</p>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+                      </div>
+              <div class="col-2"></div>
+          </div>
+
+
+    <div class="row">
+          <div class="col-6 text-center">
+
+{#                    {% if pays is None %}#}
+
+                        {% if rents.status not in '3 , 3.1 , 4 ,5' %}
+                            <h1 class="text-danger">ยังไม่มีการโอน</h1>
+{##}                         {% else %}
+
+{#                        {% else %}#}
+                                    <h3 class="text-center">หลักฐานการโอน</h3>
+                        {% for p in pays %}
+                    <div class="col ">
+                        <p>เลขที่การโอน : <span class="text-danger">{{ p.pay_id }}</span> </p>
+                         <p>เลขบัญชี : <span class="text-danger">{{ p.bank.bank_num }}</span> </p>
+                        <p>สาขา : <span class="text-danger">{{ p.bank.branch }}</span> </p>
+                    </div>
+                    <div class="col text-start">
+                        <p>วันที่ : <span class="text-danger">{{ p.pay_date }}</span> </p>
+                        <p>เจ้าของบัญชี : <span class="text-danger">{{ p.bank.name }}</span> </p>
+                    <p>ยอดการชำระ : <span class="text-danger">{{ p.pay_total }}</span> </p>
+
+                    </div>
+
+            <div class="container">
+         <img class="img img-fluid" src="{{ p.slip_img.url}}">
+                    </div>
+
+                {% endfor %}
+{#                            {% endif %}#}
+
+            {% endif %}
+
+          </div>
+          <div class="col-6">
+    <div class="card-header ">
+        <h6>รายละเอียด : </h6>
+        <p>เช่ารถ : <span class="text-warning">{{ rents.rent_date }}</span>   </p>
+        <p> คืนรถ : <span class="text-warning">{{ rents.return_date }}</span></p>
+        <p>จำนวน : <span class="text-warning">{{ rents.amount }}</span> วัน</p>
+
+        <h6>รวมทั้งสิ้น : <span class="text-danger"> {{ rents.getTotalrent | floatformat:2 | intcomma }}</span> บาท</h6>
+
+
+              {% if rents.status in '3 , 3.1' %}
+                <form method="post">
+                {% csrf_token %}
+                  <div class="row mt-4">
+                <input class="btn btn-success" onclick="return confirm('ท่านยืนยันใช่หรือไม่ ?')" type="submit" value="ยืนยันการชำระ">&nbsp;
+                      <a class="btn btn-danger text-white"  href="{% url 'backend_RentDetails' rents.rent_id %}" >กลับ</a>&nbsp;
+                      <a class="btn bg-warning text-white" href="{% url 'incompleteTransfer' rents.rent_id %}">ยอดโอนไม่ถูกต้อง</a>&nbsp;
+
+
+
+               </div>
+
+                  </form>
+                  </div>
+              {% endif %}
+
+</div>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+
+        </div>
+     {% endblock %}
