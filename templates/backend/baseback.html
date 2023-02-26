@@ -48,9 +48,12 @@
 <div class="w3-sidebar w3-bar-block w3-dark-grey w3-animate-left" style="display:none" id="mySidebar">
   <button class="w3-bar-item w3-button w3-large"
   onclick="w3_close()">Close <i class="fa fa-door-open"></i></button>
+<a href="/" class="w3-bar-item w3-button">ไปยังหน้าเว็บ <i class="fa fa-earth"></i></a>
         <a href="/CarRental/backend" class="w3-bar-item w3-button">Home <i class="fa fa-home"></i></a>
+{% if request.session.userStatus == "admin" %}
   <a href="/CarRental/backend/car_type/1" class="w3-bar-item w3-button">ประเภทรถยนต์ <i class="fa fa-car-side"></i> </a>
 <a href="/CarRental/backend/Memberlist/1" class="w3-bar-item w3-button">ผู้ใช้ระบบ <i class="fa fa-user"></i></a>
+{% endif %}
   <a href="/CarRental/backend/car/1" class="w3-bar-item w3-button">รถยนต์ <i class="fa fa-car"></i></a>
   <a href="{% url 'address' %}" class="w3-bar-item w3-button">สถานที่รับรถ <i class="fa fa-bank"></i></a>
     <a href="/CarRental/backend/bank/1" class="w3-bar-item w3-button">บัญชีธนาคาร <i class="fa fa-piggy-bank"></i></a>

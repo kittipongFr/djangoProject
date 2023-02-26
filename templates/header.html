@@ -29,26 +29,34 @@
                               <li class="nav-item ">
                                  <a class="nav-link" href="/"> Home<i class="fa fa-home"></i>  </a>
                               </li>
-                            <li class="nav-item">
-                                 <a class="nav-link" href="{% url 'showCarAll' %}">Car All</a>
-                              </li>
-                              <li class="nav-item">
-                                 <a class="nav-link" href="">Furnitures</a>
-                              </li>
-                              <li class="nav-item">
-                                 <a class="nav-link" href="">Testimonial</a>
-                              </li>
+{#                            <li class="nav-item">#}
+{#                                 <a class="nav-link" href="{% url 'showCarAll' %}">Car All</a>#}
+{#                              </li>#}
+{#                              <li class="nav-item">#}
+{#                                 <a class="nav-link" href="">Furnitures</a>#}
+{#                              </li>#}
+
 
                               <li class="nav-item">
                                  <a class="nav-link" href="/CarRental/memRentList/1">Bill Rent</a>
                               </li>
-                           {% if request.session.userId %}
+
+                           <li class="nav-item">
+                                 <a class="nav-link" href="{% url 'backend_index' %}"><i class="fa fa-user-check"></i>For Partner</a>
+                              </li>
+                           <li class="nav-item d_none">
+                                <input type="text" class="form-control " placeholder="Search">
+                              </li>
+                              <li class="nav-item d_none mt-2">
+                                 <a class="nav-link" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
+                              </li>
+                               {% if request.session.userId %}
                                {% if request.session.userStatus %}
                                <li class="nav-item">
           <a class="text-white" href="{% url 'memberedit' %}">  <i class="fa-regular fa-user"></i> User : {{ request.session.userName }} </a>
                                </li>&nbsp;
                     <a href="{% url 'logout' %}" class="nav-link text-white font-weight-bold px-0">
-                <span class="d-sm-inline d-none text-danger">LogOut</span>
+                <span class="d-sm-inline d-none text-white-50">LogOut</span>
               </a>
 
                                {% endif %}
@@ -57,9 +65,6 @@
                                  <a class="nav-link" href="{% url 'signIn' %}"><i class="fa fa-user-circle padd_right" aria-hidden="true"></i>Login/Register</a>
                               </li>
                            {% endif %}
-                              <li class="nav-item d_none">
-                                 <a class="nav-link" href="#"><i class="fa fa-search" aria-hidden="true"></i></a>
-                              </li>
                            </ul>
                         </div>
                      </nav>

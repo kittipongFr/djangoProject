@@ -72,7 +72,7 @@
         }
 
         .box h2 {
-            font-size: 20px;
+            font-size: 15px;
             font-weight: bold;
             color: #e8e2e2;
         }
@@ -105,13 +105,14 @@
                         <h2><strong></strong> {{ car.brand }} {{ car.car_model }}</h2>
                         <p><strong>ผู้ให้เช่า:</strong> {{ car.own_id.name }}</p>
                         <p><strong>จังหวัด:</strong> {{ car.provinces.name_th }}</p>
+                        <p><strong>สถานที่รับรถ:</strong> {{ car.address.name }}</p>
 
                         <p><strong>ประเภทเกียร์:</strong> {{ car.gearType }}</p>
                         <p class="car-price">฿{{ car.price | floatformat:2 | intcomma }} / วัน</p>
                         <p>Color: Red</p>
 
                         <p class="car-description"><strong>Details :</strong> {{ car.desc }}</p>
-                        <a class="buy-btn btn text-white" href="">คลิ๊กที่นี่เพื่อดูแผนที่ <i class="fa fa-map-location"></i> </a>
+                        <a class="buy-btn btn text-white" target="_blank" href="{{ car.address.location }}">คลิ๊กที่นี่เพื่อดูแผนที่ <i class="fa fa-map-location"></i> </a>
                     </div>
 
                 </div>

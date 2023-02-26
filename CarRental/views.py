@@ -783,8 +783,9 @@ def Owner_Register(request):
         oid = request.POST.get("id")
         v_own = Owner.objects.filter(own_id=oid)
         own_email = request.POST.get("email")
+        user = User.objects.filter(username=oid)
         v_email = Owner.objects.filter(email=own_email)
-        if v_own:
+        if v_own or user:
             context = {'eror': True, 'province': province}
             return render(request, 'signUpOwn.html', context)
         elif v_email:
@@ -817,9 +818,10 @@ def Member_Register(request):
     if request.method == 'POST':
         mid = request.POST.get("id")
         v_mem = Member.objects.filter(mem_id=mid)
+        user = User.objects.filter(username=mid)
         mem_email = request.POST.get("email")
         v_email = Member.objects.filter(email=mem_email)
-        if v_mem:
+        if v_mem or user:
             context = {'eror': True, 'province': province}
             return render(request, 'signUpMem.html', context)
         elif v_email:
@@ -837,7 +839,7 @@ def Member_Register(request):
             user.first_name = name
             user.is_staff = False
             user.save()
-        return redirect('home')
+            return redirect('signIn')
     else:
         context = {'province': province}
         return render(request, 'signUpMem.html', context)

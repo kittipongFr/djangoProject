@@ -199,19 +199,24 @@
                                                 <span class="badge badge-info">{{ c.gearType }}</span><br>
                                                 <span class="badge badge-success mt-2">{{ c.seat }} ที่นั่ง</span><br>
                                                 <span class="text-sm mt-3" style="font-size: 10pt">เช่ารถ : <span
-                                                        class="text-danger">{{ request.session.rent_date }}</span>
+                                                        class="text-danger">{{ request.session.rent_date }}</span><br>
+                                                    <span class="text-sm mt-3" style="font-size: 10pt"> คืนรถ :
+                                                    <span class="text-danger">{{ request.session.return_date }}</span></span>
                                             </div>
                                             <div class="col-4">
 
                                                 <span class="badge badge-warning ">จังหวัด : {{ c.provinces.name_th }}</span><br>
+                                                <span class="badge badge-danger mt-2 ">จุดรับรถ : {{ c.address.name }}</span><br>
                                                 <span class="badge badge-success mt-2">ประเภท : {{ c.type_id.type_name }}</span>
                                                 <br>
-                                                <span class="text-sm mt-3" style="font-size: 10pt"> คืนรถ :
-                                                    <span class="text-danger">{{ request.session.return_date }}</span></span><br>
+
 
 
                                             </div>
                                             <div class="col-4">
+                                                <a href="{{ c.address.location }}" target="_blank"
+                                                   class="btn btn-success buy-btn mt-2"> จุดรับรถ <i
+                                                        class="fa fa-map-location"></i></a>
                                                  <a href="{% url 'carDetail' c.car_id %}"
                                                    class="btn btn-primary buy-btn mt-2">ดูรายละเอียด <i
                                                         class="fa fa-magnifying-glass"></i></a>
