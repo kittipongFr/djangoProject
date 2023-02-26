@@ -130,16 +130,6 @@ def memChangePassword(request):
 
 
 
-
-
-
-
-
-
-
-
-
-
 @login_required
 def backend_index(request):
     user_status = request.session['userStatus']
@@ -521,7 +511,7 @@ def backend_Rent(request, pageNo):
     user_status = request.session['userStatus']
     if user_status == 'admin' or user_status == 'owner':
         rent = Rent.objects.filter(Q(own_id=request.session['userId']),
-                                   Q(status='1') | Q(status='2') | Q(status='3') | Q(status='4')).order_by('-rent_date')
+                                   Q(status='1') | Q(status='2') | Q(status='3') | Q(status='4')).order_by('status')
         rent_page = Paginator(rent, 5)
         context = {'rent': rent_page.page(pageNo)}
         return render(request, 'backend/billRent.html', context)
@@ -556,7 +546,7 @@ def backend_Cartype(request, pageNo):
 def backend_Car(request, pageNo):
     user_status = request.session['userStatus']
     if user_status == 'admin' or user_status == 'owner':
-        car = Car.objects.all().filter(own_id=request.session['userId']).order_by('-car_id')
+        car = Car.objects.all().filter(own_id=request.session['userId']).order_by('car_id')
         car_page = Paginator(car, 5)
         context = {'car': car_page.page(pageNo)}
         return render(request, 'backend/car.html', context)
@@ -1086,18 +1076,7 @@ def rentSuccess(request, rent_id, car_id):
         return redirect('home')
 
 
-# import  requests,json
-# def sendNotify(message):
-#     url = "https://notify-api.line.me/api/notify"
-#     LINE_ACCESS_TOKEN = "EeaOnlRFpgRVebZlSA9XQli2Qlc4mk0jJgsZVCAIhkv"  # token from your line notify web
-#     LINE_HEADERS = {'Content-Type': 'application/x-www-form-urlencoded', "Authorization": "Bearer " + LINE_ACCESS_TOKEN}
-#     return requests.post(url, headers=LINE_HEADERS, data=message)
-#
-# def sendLineMessage(request):
-#     sMessage = "Django Message for You"  # ข้อความที่ต้องการส่ง
-#     sendNotify(sMessage)
-#     messages.add_message(request, messages.INFO, "Send Message to Line Notify was Successfully.")
-#     return redirect('home')
+
 
 @login_required
 def pdfReceipt(request, rent_id):
@@ -1116,23 +1095,6 @@ def pdfReceipt(request, rent_id):
     else:
         return HttpResponse("<h1><b>เกิดข้อผิดพลาด!!!</b> ไม่สามารถสร้างเอกสาร PDF ได้...</h2>", status=400)
 
-
-# @login_required
-# def gg(request):
-#     day = request.GET.get('day')
-#     if request.method == 'GET':
-#         if day != '':
-#             reportDay = Rent.objects.filter(
-#                 Q(rent_date=day) & Q(own_id=request.session['userId'])).annotate(
-#                 date=TruncDay('rent_date')).values('date').annotate(count=Count('rent_id')).annotate(
-#                 total=Sum(F('price') * F('amount'))).order_by('date')
-#             list_rent = Rent.objects.filter(Q(rent_date=day) & (Q(own_id=request.session['userId'])))
-#             context = {'reportDay': reportDay, 'list_rent': list_rent}
-#             return render(request, 'backend/reportQ.html', context)
-#         else:
-#             return redirect('backend_index')
-#     else:
-#         return redirect('backend_index')
 
 
 @login_required
@@ -1298,7 +1260,7 @@ def memRentList(request,pageNo):
 def memPayment(request,rent_id):
     rent = get_object_or_404(Rent, rent_id=rent_id)
     bank = OwnBank.objects.filter(own_id=rent.own_id)
-    # mem = get_object_or_404(Member, mem_id=request.session.get("userId"))
+
     if request.method == 'POST':
         payId = request.POST['pay_id']
         payTotal = request.POST['total']
@@ -1312,9 +1274,9 @@ def memPayment(request,rent_id):
         ext = imgpath[point:]
         imgNames = imgpath.split('/')
         imgName = imgNames[len(imgNames) - 1]
-        newImg = payId + "_" + str(datetime.date.today()) + ext
+        newImg = payId + "_" + str(datetime.datetime.now()) + ext
 
-        pay = get_object_or_404(Payment,pay_id = payId)
+        pay = Payment.objects.get(pay_id=payId)
         pay.slip_img = 'static/image/Slip/' + newImg
         pay.save()
         if os.path.exists('static/image/Slip/' + newImg):

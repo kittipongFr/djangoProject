@@ -21,8 +21,7 @@
 
                     <div class="card-body pb-2">
 
-                        <form role="form" method="POST" action="{% url 'backend_Car_add' %}"
-                              enctype="multipart/form-data">
+                        <form role="form"  method="POST"  action="{% url 'backend_Car_add' %}" enctype="multipart/form-data">
                             {% csrf_token %}
 
                             {% if eror %}

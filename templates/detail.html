@@ -158,7 +158,7 @@
                                 <input class="form-control " maxlength="8" required type="date" value="{{ request.session.return_date }}" name="return_date" id="id">
                             </div>
                             <div class="alert alert-warning">หากต้องการแก้ไขข้อมูล <span class="btn btn-outline-success" onclick="location.href='{% url 'memberedit' %}'">คล๊กที่นี่</span></div>
-                    <input type="submit" class="btn btn-primary text-white  mx-auto buy-btn" value="เช่ารถ" >
+                    <input type="submit" onclick="confirm('ท่านต้องการจองหร์อไม่?')" class="btn btn-primary text-white  mx-auto buy-btn" value="เช่ารถ" >
                         {% else %}
                            <div class="alert alert-warning">กรุณาสมัครสมาชิกเพื่อเช่ารถ <span class="btn btn-outline-success" onclick="location.href='{% url "Member_Register" %}'">คล๊กที่นี่</span></div>
                         {% endif %}
